@@ -1,0 +1,19 @@
+/* src/components/JobCard.css */
+
+.job-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.job-card h3 {
+    margin: 0;
+    color: #333;
+}
+
+.job-card p {
+    margin: 5px 0;
+    color: #555;
+}

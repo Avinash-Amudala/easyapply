@@ -1,0 +1,82 @@
+/* src/components/LandingPage.css */
+
+.landing-page {
+    text-align: center;
+    color: #2f3b52;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing-header h1 {
+    font-size: 3em;
+    color: #40597a;
+    margin-bottom: 10px;
+}
+
+.landing-header p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.landing-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.landing-btn {
+    background-color: #2f3b52;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.landing-btn:hover {
+    background-color: #40597a;
+}
+
+.features {
+    margin-top: 40px;
+    max-width: 800px;
+}
+
+.features h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #2f3b52;
+}
+
+.features-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+}
+
+.feature-item h3 {
+    color: #40597a;
+    margin-bottom: 10px;
+}
+
+.feature-item p {
+    color: #555;
+    font-size: 0.9em;
+}

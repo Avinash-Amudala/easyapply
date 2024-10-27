@@ -1,0 +1,47 @@
+/* src/components/Sidebar.css */
+.sidebar {
+    width: 25%;
+    background-color: #2f3b52;
+    color: #fff;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.sidebar h2 {
+    font-size: 1.5em;
+    color: #a9c4eb;
+}
+
+.sidebar nav {
+    margin-top: 20px;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: 10px 0;
+    color: #d0e1f9;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+.sidebar nav a:hover {
+    background-color: #40597a;
+    padding-left: 10px;
+    color: #fff;
+}
+
+.logout-button {
+    background-color: #f44e42;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 1em;
+}
+
+.logout-button:hover {
+    background-color: #ff7561;
+}
