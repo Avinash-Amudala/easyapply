@@ -1,6 +1,9 @@
 {
   "name": "easyapply",
   "version": "1.0.0",
-  "dependencies": {
+  "scripts": {
+    "start": "npm run start --prefix backend",
+    "client": "npm start --prefix frontend",
+    "build": "npm run build --prefix frontend"
   }
 }
