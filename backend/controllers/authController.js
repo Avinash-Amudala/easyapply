@@ -38,9 +38,11 @@ exports.loginUser = async (req, res) => {
 
 exports.checkSubscriptionStatus = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
-        const isSubscribed = user.subscriptionStatus;
-        res.status(200).json({ isSubscribed });
+        const user = await User.findById(req.user.id); // Ensure correct field
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ isSubscribed: user.subscriptionStatus }); // Correct property
     } catch (error) {
         console.error('Error checking subscription status:', error);
         res.status(500).json({ message: 'Server error' });
@@ -50,13 +52,36 @@ exports.checkSubscriptionStatus = async (req, res) => {
 exports.updateSubscription = async (req, res) => {
     try {
         const { plan } = req.body;
-        const user = await User.findByIdAndUpdate(req.user._id, {
-            subscriptionPlan: plan,
-            subscriptionStatus: true
-        }, { new: true });
 
+        // Log incoming data
+        console.log('Received subscription request:', plan);
+        console.log('Authenticated user ID:', req.user._id);
+
+        // Validate the plan
+        if (!['basic', 'pro', 'premium'].includes(plan)) {
+            console.error('Invalid subscription plan:', plan);
+            return res.status(400).json({ message: 'Invalid subscription plan' });
+        }
+
+        // Attempt to update the user in the database
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                subscriptionPlan: plan,
+                subscriptionStatus: true,
+            },
+            { new: true }
+        );
+
+        if (!user) {
+            console.error('User not found:', req.user._id);
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log('Subscription updated successfully:', user.subscriptionPlan);
         res.status(200).json({ message: 'Subscription updated successfully', plan: user.subscriptionPlan });
     } catch (error) {
+        // Log the full error
         console.error('Error updating subscription:', error);
         res.status(500).json({ message: 'Server error' });
     }

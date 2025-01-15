@@ -1,11 +1,18 @@
-/* src/components/Profile.css */
+.profile-container {
+    margin-left: 250px; /* Sidebar width */
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
 
-.profile-card {
-    background-color: #fff;
+.profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
 }
 
 .profile-field {
@@ -23,4 +30,27 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+
+.update-btn {
+    display: block;
+    width: 100%;
+    background-color: #2f3b52;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.update-btn:hover {
+    background-color: #40597a;
+}
+
+.loading-text {
+    text-align: center;
+    font-size: 1.2em;
+    color: #555;
 }

@@ -1,0 +1,52 @@
+/* src/components/SubscriptionOptions.css */
+.subscription-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.plans {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.plan-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.plan-card h3 {
+    margin: 10px 0;
+}
+
+.plan-card p {
+    margin: 5px 0;
+}
+
+.plan-card button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.plan-card button:hover {
+    background-color: #0056b3;
+}

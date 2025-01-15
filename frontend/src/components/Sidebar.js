@@ -1,19 +1,16 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
-function Sidebar({ onLogout }) {
+function Sidebar() {
     return (
         <div className="sidebar">
-            <h2>EasyApply</h2>
-            <nav>
-                <Link to="/dashboard">Dashboard</Link>
-                <Link to="/jobs">Jobs</Link>
-                <Link to="/profile">Profile</Link>
-                <Link to="/preferences">Preferences</Link>
-            </nav>
-            <button className="logout-button" onClick={onLogout}>Logout</button>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/jobs">Jobs</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/preferences">Preferences</a></li>
+            </ul>
         </div>
     );
 }

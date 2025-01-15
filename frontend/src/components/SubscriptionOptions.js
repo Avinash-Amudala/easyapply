@@ -2,28 +2,47 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateSubscription } from '../api';
+import './SubscriptionOptions.css';
 
 function SubscriptionOptions({ onSubscribe }) {
     const navigate = useNavigate();
 
     const handleSubscription = async (plan) => {
         try {
-            await updateSubscription(plan); // Assume this updates the subscription in the backend
+            const response = await updateSubscription(plan);
+            console.log('Subscription successful:', response);
             alert(`Subscribed to ${plan} plan!`);
-            onSubscribe();  // Notify App.js of subscription success
-            navigate('/dashboard'); // Redirect to the dashboard
+            onSubscribe();
+            navigate('/dashboard');
         } catch (error) {
-            console.error('Subscription error:', error);
-            alert('Failed to subscribe');
+            console.error('Subscription error:', error.response?.data || error.message);
+            alert(`Failed to subscribe. Reason: ${error.response?.data?.message || 'Unknown error'}`);
         }
     };
 
     return (
-        <div>
-            <h2>Choose a Subscription Plan</h2>
-            <button onClick={() => handleSubscription('basic')}>Basic Plan - $150</button>
-            <button onClick={() => handleSubscription('pro')}>Pro Plan - $300</button>
-            <button onClick={() => handleSubscription('premium')}>Premium Plan - $400</button>
+        <div className="subscription-container">
+            <h2>Choose Your Plan</h2>
+            <div className="plans">
+                <div className="plan-card">
+                    <h3>Basic Plan</h3>
+                    <p>$150</p>
+                    <p>200 Applications</p>
+                    <button onClick={() => handleSubscription('basic')}>Subscribe</button>
+                </div>
+                <div className="plan-card">
+                    <h3>Pro Plan</h3>
+                    <p>$300</p>
+                    <p>500 Applications</p>
+                    <button onClick={() => handleSubscription('pro')}>Subscribe</button>
+                </div>
+                <div className="plan-card">
+                    <h3>Premium Plan</h3>
+                    <p>$400</p>
+                    <p>1000 Applications</p>
+                    <button onClick={() => handleSubscription('premium')}>Subscribe</button>
+                </div>
+            </div>
         </div>
     );
 }

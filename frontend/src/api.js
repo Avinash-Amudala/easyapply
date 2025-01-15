@@ -24,9 +24,10 @@ export const checkSubscriptionStatus = async () => {
 
 export const updateSubscription = async (plan) => {
     try {
-        await API.post('/auth/subscribe', { plan });
+        const response = await API.post('/auth/update-subscription', { plan });
+        return response.data;
     } catch (error) {
-        console.error('Subscription update error:', error);
+        console.error('Error updating subscription:', error.response?.data || error.message);
         throw error;
     }
 };
@@ -49,4 +50,13 @@ export const getUserProfile = async () => {
 
 export const updateUserProfile = async (profileData) => {
     await API.put('/auth/profile', profileData);
+};
+
+export const deleteJob = async (id) => {
+    try {
+        await API.delete(`/jobs/${id}`);
+    } catch (error) {
+        console.error('Error deleting job:', error);
+        throw error;
+    }
 };

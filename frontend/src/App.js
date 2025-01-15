@@ -16,13 +16,21 @@ import { checkSubscriptionStatus } from './api';
 function App() {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const checkSubscription = async () => {
             if (isLoggedIn) {
-                const status = await checkSubscriptionStatus();
-                setIsSubscribed(status);
+                try {
+                    const status = await checkSubscriptionStatus();
+                    setIsSubscribed(status);
+                } catch (error) {
+                    console.error('Error checking subscription:', error);
+                }
+            } else {
+                setIsSubscribed(false); // Ensure subscription is false if not logged in
             }
+            setLoading(false);
         };
         checkSubscription();
     }, [isLoggedIn]);
@@ -41,25 +49,35 @@ function App() {
         setIsSubscribed(false);
     };
 
+    if (loading) {
+        return <div className="loading-screen">Loading...</div>;
+    }
+
     return (
         <Router>
             <div className="App">
-                {isLoggedIn && isSubscribed && <Sidebar onLogout={handleLogout} />}
-                <div className="main-content">
+                {/* Conditionally render Sidebar only when logged in and subscribed */}
+                {isLoggedIn && isSubscribed ? <Sidebar onLogout={handleLogout} /> : null}
+                <div className={`main-content ${isLoggedIn && isSubscribed ? '' : 'no-sidebar'}`}>
                     <Routes>
+                        {/* Public Routes */}
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm onLoginSuccess={handleLoginSuccess} />} />
+
+                        {/* Subscription Route */}
                         <Route
                             path="/subscription"
                             element={
                                 isLoggedIn && !isSubscribed ? (
                                     <SubscriptionOptions onSubscribe={handleSubscriptionSuccess} />
                                 ) : (
-                                    <Navigate to="/dashboard" />
+                                    <Navigate to={isLoggedIn ? "/dashboard" : "/login"} />
                                 )
                             }
                         />
+
+                        {/* Protected Routes */}
                         <Route
                             path="/dashboard"
                             element={
@@ -90,12 +108,33 @@ function App() {
                         />
                         <Route
                             path="/profile"
-                            element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
+                            element={
+                                isLoggedIn ? (
+                                    isSubscribed ? (
+                                        <Profile />
+                                    ) : (
+                                        <Navigate to="/subscription" />
+                                    )
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
                         />
                         <Route
                             path="/preferences"
-                            element={isLoggedIn ? <Preferences /> : <Navigate to="/login" />}
+                            element={
+                                isLoggedIn ? (
+                                    isSubscribed ? (
+                                        <Preferences />
+                                    ) : (
+                                        <Navigate to="/subscription" />
+                                    )
+                                ) : (
+                                    <Navigate to="/login" />
+                                )
+                            }
                         />
+                        <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </div>
             </div>
