@@ -2,9 +2,26 @@
 import React from 'react';
 import './JobCard.css';
 
+const deleteJob = async (jobId) => {
+    try {
+        const response = await fetch(`/api/jobs/${jobId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete the job');
+        }
+        console.log(`Job with ID ${jobId} deleted successfully.`);
+    } catch (error) {
+        console.error('Error in deleteJob:', error);
+        throw error;
+    }
+};
+
 function JobCard({ job, setJobs }) {
     const handleEdit = () => {
-        // Open a modal for editing
         console.log('Edit job:', job);
     };
 
@@ -14,7 +31,7 @@ function JobCard({ job, setJobs }) {
                 await deleteJob(job._id);
                 setJobs(prev => prev.filter(j => j._id !== job._id));
             } catch (error) {
-                console.error('Error deleting job:', error);
+                alert('Failed to delete the job. Please try again.');
             }
         }
     };
