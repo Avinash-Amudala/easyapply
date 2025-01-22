@@ -5,5 +5,8 @@
     "start": "npm run start --prefix backend",
     "client": "npm start --prefix frontend",
     "build": "npm run build --prefix frontend"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }

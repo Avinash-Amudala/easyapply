@@ -1,21 +1,27 @@
 import axios from 'axios';
 
+// Dynamically set the base URL based on environment
 const BASE_URL =
     process.env.NODE_ENV === 'production'
-        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api'
+        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api' // Replace with backend deployment URL
         : 'http://localhost:5001/api';
 
 const API = axios.create({ baseURL: BASE_URL });
 
-API.interceptors.request.use(req => {
+// Attach token to each request if available
+API.interceptors.request.use((req) => {
     const token = localStorage.getItem('token');
-    if (token) req.headers.Authorization = `Bearer ${token}`;
+    if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+    }
     return req;
 });
 
+// Authentication Endpoints
 export const register = (formData) => API.post('/auth/register', formData);
 export const login = (formData) => API.post('/auth/login', formData);
 
+// Subscription Endpoints
 export const checkSubscriptionStatus = async () => {
     try {
         const response = await API.get('/auth/check-subscription');
@@ -36,6 +42,7 @@ export const updateSubscription = async (plan) => {
     }
 };
 
+// Job Endpoints
 export const getJobs = async () => {
     try {
         const response = await API.get('/jobs');
@@ -46,16 +53,6 @@ export const getJobs = async () => {
     }
 };
 
-// Profile APIs
-export const getUserProfile = async () => {
-    const response = await API.get('/auth/profile');
-    return response.data;
-};
-
-export const updateUserProfile = async (profileData) => {
-    await API.put('/auth/profile', profileData);
-};
-
 export const deleteJob = async (id) => {
     try {
         await API.delete(`/jobs/${id}`);
@@ -63,4 +60,13 @@ export const deleteJob = async (id) => {
         console.error('Error deleting job:', error);
         throw error;
     }
+};
+
+export const getUserProfile = async () => {
+    const response = await API.get('/auth/profile');
+    return response.data;
+};
+
+export const updateUserProfile = async (profileData) => {
+    await API.put('/auth/profile', profileData);
 };
