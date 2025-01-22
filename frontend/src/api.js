@@ -1,14 +1,13 @@
 import axios from 'axios';
 
-// Dynamically set the base URL based on environment
+// Dynamically set the base URL
 const BASE_URL =
     process.env.NODE_ENV === 'production'
-        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api' // Replace with backend deployment URL
+        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api'
         : 'http://localhost:5001/api';
 
 const API = axios.create({ baseURL: BASE_URL });
 
-// Attach token to each request if available
 API.interceptors.request.use((req) => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -17,7 +16,7 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
-// Authentication Endpoints
+// Authentication APIs
 export const register = (formData) => API.post('/auth/register', formData);
 export const login = (formData) => API.post('/auth/login', formData);
 
