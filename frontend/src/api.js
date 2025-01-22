@@ -1,7 +1,11 @@
-// src/api.js
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5001/api' });
+const BASE_URL =
+    process.env.NODE_ENV === 'production'
+        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api'
+        : 'http://localhost:5001/api';
+
+const API = axios.create({ baseURL: BASE_URL });
 
 API.interceptors.request.use(req => {
     const token = localStorage.getItem('token');
