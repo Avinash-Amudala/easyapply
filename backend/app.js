@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'https://<your-frontend-vercel-url>',
+    'https://https://easyapply-rho.vercel.app/',
     'http://localhost:3000'
 ];
 
