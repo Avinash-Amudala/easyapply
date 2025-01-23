@@ -9,11 +9,9 @@ dotenv.config();
 
 const app = express();
 
-// Allow specific origins for CORS
 const allowedOrigins = [
-    'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app', // Backend Vercel URL
-    'https://easyapply-rho.vercel.app', // Frontend Vercel URL
-    'http://localhost:3000', // For local testing
+    'https://<your-frontend-vercel-url>',
+    'http://localhost:3000'
 ];
 
 app.use(
@@ -25,14 +23,14 @@ app.use(
                 callback(new Error('Not allowed by CORS'));
             }
         },
-        credentials: true, // Allow cookies and credentials
+        credentials: true,
     })
 );
 
-// Enable JSON parsing
+
 app.use(express.json());
 
-// Connect to MongoDB
+// MongoDB connection
 mongoose
     .connect(process.env.MONGO_URI, {
         useNewUrlParser: true,

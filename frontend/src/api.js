@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-// Dynamically set the base URL
 const BASE_URL =
     process.env.NODE_ENV === 'production'
-        ? 'https://easyapply-olf9o498v-avinashamudalas-projects.vercel.app/api'
+        ? '/api'
         : 'http://localhost:5001/api';
 
 const API = axios.create({ baseURL: BASE_URL });
