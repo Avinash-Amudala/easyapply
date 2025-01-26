@@ -4,8 +4,8 @@
     { "src": "backend/app.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/backend/app.js" },
+    { "src": "/api/(.*)", "dest": "backend/app.js" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/frontend/build/index.html" }
+    { "src": "/(.*)", "dest": "frontend/build/$1" }
   ]
 }

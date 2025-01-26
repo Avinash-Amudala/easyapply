@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'https://https://easyapply-rho.vercel.app/',
+    'https://easyapply-msz888j4c-avinashamudalasa-projects.vercel.app',
     'http://localhost:3000'
 ];
 
@@ -26,7 +26,6 @@ app.use(
         credentials: true,
     })
 );
-
 
 app.use(express.json());
 
