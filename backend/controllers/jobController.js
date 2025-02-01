@@ -45,3 +45,21 @@ exports.deleteJob = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.delegateJob = async (req, res) => {
+    try {
+        const { title, company, description, link } = req.body;
+        const job = new JobApplication({
+            jobTitle: title,
+            company,
+            description,
+            jobLink: link,
+            userId: req.user._id,
+        });
+        await job.save();
+        res.status(201).json({ message: 'Job delegated successfully', job });
+    } catch (error) {
+        console.error('Error delegating job:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

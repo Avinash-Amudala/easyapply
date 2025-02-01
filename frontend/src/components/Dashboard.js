@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getJobs } from '../api';
+import { getJobs, logout } from '../api'; // Add logout
 import JobCard from './JobCard';
 import './Dashboard.css';
 
@@ -25,6 +25,11 @@ function Dashboard() {
         fetchJobs();
     }, []);
 
+    const handleLogout = () => {
+        logout();
+        window.location.href = '/login'; // Redirect to login page
+    };
+
     const filteredJobs = jobs.filter(job =>
         job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.company.toLowerCase().includes(searchTerm.toLowerCase())
@@ -35,7 +40,10 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            <h2>Your Job Applications</h2>
+            <div className="header">
+                <h2>Your Job Applications</h2>
+                <button onClick={handleLogout} className="logout-btn">Logout</button>
+            </div>
             <input
                 type="text"
                 placeholder="Search jobs..."

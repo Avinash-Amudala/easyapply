@@ -68,3 +68,8 @@ export const getUserProfile = async () => {
 export const updateUserProfile = async (profileData) => {
     await API.put('/auth/profile', profileData);
 };
+
+export const logout = () => {
+    localStorage.removeItem('token');
+};
+

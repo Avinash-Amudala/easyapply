@@ -28,7 +28,7 @@ exports.loginUser = async (req, res) => {
         const isPasswordCorrect = await user.comparePassword(password);
         if (!isPasswordCorrect) return res.status(400).json({ message: 'Invalid credentials' });
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
         res.status(200).json({ token });
     } catch (error) {
         console.error('Error in loginUser:', error);
@@ -38,13 +38,13 @@ exports.loginUser = async (req, res) => {
 
 exports.checkSubscriptionStatus = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id); // Ensure correct field
+        const user = await User.findById(req.user.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json({ isSubscribed: user.subscriptionStatus }); // Correct property
+        res.status(200).json({ isSubscribed: user.subscriptionStatus });
     } catch (error) {
-        console.error('Error checking subscription status:', error);
+        console.error('Error checking subscription status:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 };

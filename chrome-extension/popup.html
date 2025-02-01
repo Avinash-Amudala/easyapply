@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Assistant</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-
+<div class="popup-container">
+    <header>
+        <h1>Job Assistant</h1>
+    </header>
+    <form id="jobForm">
+        <div id="authSection" class="hidden">
+            <p>Please <a href="#" id="loginLink">log in</a> to your account.</p>
+        </div>
+        <div id="jobSection">
+            <div class="input-group">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" id="jobTitle" placeholder="e.g., Software Engineer" />
+            </div>
+            <div class="input-group">
+                <label for="companyName">Company Name</label>
+                <input type="text" id="companyName" placeholder="e.g., Tech Innovators Inc." />
+            </div>
+            <div class="input-group">
+                <label for="jobLink">Job Link</label>
+                <input type="text" id="jobLink" placeholder="e.g., https://linkedin.com/job" />
+            </div>
+            <div class="input-group">
+                <label for="jobDescription">Job Description</label>
+                <textarea id="jobDescription" placeholder="Job description will appear here..."></textarea>
+            </div>
+            <button type="button" id="delegateJob" class="btn-primary">Delegate Job</button>
+        </div>
+    </form>
+    <footer>
+        <p>Powered by <strong>Job Assistant</strong></p>
+    </footer>
+</div>
+<script src="popup.js"></script>
 </body>
 </html>
