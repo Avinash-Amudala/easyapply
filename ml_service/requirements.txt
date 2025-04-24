@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pymongo
+sentence-transformers
+scikit-learn
+numpy
+requests
+cachetools
+python-dotenv
+pytz

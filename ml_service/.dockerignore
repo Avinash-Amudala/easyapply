@@ -1,0 +1,7 @@
+# ml_service/.dockerignore
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store

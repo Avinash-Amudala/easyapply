@@ -1,0 +1,56 @@
+/* Admin Dashboard Styles */
+.admin-dashboard {
+    max-width: 1000px;
+    margin: auto;
+    padding: 2rem;
+}
+
+.admin-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.admin-section h2 {
+    margin-bottom: 1rem;
+}
+
+.admin-section select,
+.admin-section input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.admin-section button {
+    background: #0071e3;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.admin-section button:hover {
+    background: #005bb5;
+}
+
+.logout-button {
+    background: #ff3b30;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.logout-button:hover {
+    background: #cc2b24;
+}

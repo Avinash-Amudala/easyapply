@@ -1,35 +1,11 @@
-// src/components/JobCard.js
 import React from 'react';
 import './JobCard.css';
 
-const deleteJob = async (jobId) => {
-    try {
-        const response = await fetch(`/api/jobs/${jobId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response.ok) {
-            throw new Error('Failed to delete the job');
-        }
-        console.log(`Job with ID ${jobId} deleted successfully.`);
-    } catch (error) {
-        console.error('Error in deleteJob:', error);
-        throw error;
-    }
-};
-
-function JobCard({ job, setJobs }) {
-    const handleEdit = () => {
-        console.log('Edit job:', job);
-    };
-
+function JobCard({ job, onDelete, type }) {
     const handleDelete = async () => {
-        if (window.confirm(`Are you sure you want to delete the job "${job.jobTitle}"?`)) {
+        if (window.confirm("Are you sure you want to delete this job?")) {
             try {
-                await deleteJob(job._id);
-                setJobs(prev => prev.filter(j => j._id !== job._id));
+                await onDelete(job._id);
             } catch (error) {
                 alert('Failed to delete the job. Please try again.');
             }
@@ -37,16 +13,27 @@ function JobCard({ job, setJobs }) {
     };
 
     return (
-        <div className="job-card">
-            <h3>{job.jobTitle}</h3>
+        <div className={`job-card ${job.status}`}>
+            <h3>
+                <a href={job.link} target="_blank" rel="noopener noreferrer">
+                    {job.title}
+                </a>
+            </h3>
             <p><strong>Company:</strong> {job.company}</p>
             <p><strong>Status:</strong> {job.status}</p>
-            <p><strong>Applied Date:</strong> {new Date(job.appliedDate).toLocaleDateString()}</p>
-            {job.notes && <p><strong>Notes:</strong> {job.notes}</p>}
+            <p><strong>{type === 'delegated' ? 'Delegated Date' : 'Applied Date'}:</strong>
+                {new Date(job.dateDelegated || job.createdAt).toLocaleDateString()}
+            </p>
             <div className="job-card-actions">
-                <button onClick={handleEdit} className="btn edit-btn">Edit</button>
+                <button className="btn edit-btn">Edit</button>
                 <button onClick={handleDelete} className="btn delete-btn">Delete</button>
             </div>
+            {type === 'delegated' && job.assistant && (
+                <p><strong>Assistant:</strong> {job.assistant.name}</p>
+            )}
+            {type === 'applied' && job.completedAt && (
+                <p><strong>Completed:</strong> {new Date(job.completedAt).toLocaleDateString()}</p>
+            )}
         </div>
     );
 }

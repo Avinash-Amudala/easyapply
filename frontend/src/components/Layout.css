@@ -1,0 +1,12 @@
+.layout-container {
+    display: flex;
+}
+
+.content-container {
+    margin-left: 250px; /* Width of Sidebar */
+    padding: 20px;
+    flex: 1;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    box-sizing: border-box;
+}

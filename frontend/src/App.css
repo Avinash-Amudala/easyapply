@@ -1,124 +1,203 @@
 /* src/App.css */
-
-.App {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f5f7;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --border-radius: 18px;
+  --section-spacing: 80px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-body, html, #root, .App {
-  height: 100%;
+body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Ensure main content does not overlap with sidebar */
+.main-content {
+  margin-left: 240px; /* Push content right of the sidebar */
+  padding: 40px;
+  width: calc(100% - 280px);
+  box-sizing: border-box;
+}
+
+
+/* Apple-style Navigation */
 .sidebar {
-  flex: 0 0 250px; /* Fixed width for sidebar */
-  height: 100%;
-  background-color: #2f3b52;
-  color: white;
-  position: fixed; /* Keep it always visible on the left */
-  top: 0;
-  left: 0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+  background: var(--primary-bg);
+  border-right: 1px solid #e2e2e2;
+  padding: 40px 30px;
 }
 
 .sidebar a {
-  color: #ffffff;
-  text-decoration: none;
-  padding: 12px 15px;
-  border-radius: 4px;
-  margin: 5px 0;
-  font-size: 1em;
-  display: block;
-  transition: background-color 0.3s ease-in-out;
+  color: var(--text-primary);
+  font-size: 17px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
 
-.sidebar a:hover,
-.sidebar a.active {
-  background-color: #40597a;
+.sidebar a:hover {
+  background: var(--secondary-bg);
 }
 
-.sidebar .logout-btn {
-  margin-top: auto;
-  padding: 12px 15px;
-  background-color: #e74c3c;
-  color: white;
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+/* Jobs Page - Apple Style */
+.jobs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.sidebar .logout-btn:hover {
-  background-color: #c0392b;
+.jobs-section h3 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
 }
 
-.main-content.no-sidebar {
-  margin-left: 0;
-  width: 100%;
-  padding: 20px;
-  background-color: #f4f4f4;
-  overflow-y: auto;
+.jobs-list {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
 }
 
-.main-content {
-  margin-left: 250px; /* Sidebar width */
-  flex: 1;
-  padding: 20px;
-  background-color: #f4f4f4;
-  overflow-y: auto;
-}
-
-h1, h2 {
-  color: #2f3b52;
-  margin-bottom: 20px;
-}
-
-h1 {
-  font-size: 2em;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
+/* Apple-style Job Cards */
 .job-card {
-  background-color: white;
-  padding: 15px;
+  background: var(--primary-bg);
+  border: 1px solid #e2e2e2;
+  border-radius: 18px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.job-card h3 {
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 15px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  color: var(--text-primary);
 }
 
-/* General button styles */
-button, .btn {
-  background-color: #2f3b52;
-  color: #ffffff;
-  padding: 10px 15px;
-  border-radius: 4px;
-  border: none;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.job-card p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 8px 0;
 }
 
-button:hover, .btn:hover {
-  background-color: #40597a;
+/* Apple-style Buttons */
+.btn {
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
-/* Responsive adjustments */
+.edit-btn {
+  background: var(--accent);
+  color: white;
+  background-image: linear-gradient(to right, #0071e3, #0077ed);
+}
+
+.delete-btn {
+  background: #ff3b30;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+/* Apple-style Login Form */
+.auth-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 50px;
+  background: var(--primary-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid #e2e2e2;
+}
+
+.auth-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.auth-header h2 {
+  font-size: 17px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  background: var(--primary-bg);
+  border: 1px solid #e2e2e2;
+  border-radius: 50px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.auth-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+  outline: none;
+}
+
+.login-button {
+  background: var(--accent);
+  color: white;
+  font-weight: 500;
+  padding: 16px;
+  width: 100%;
+  border-radius: 50px;
+  background-image: linear-gradient(to right, #0071e3, #0077ed);
+}
+
+/* Social Buttons */
+.social-button {
+  background: var(--secondary-bg);
+  color: var(--text-primary);
+  border-radius: 50px;
+  padding: 14px;
+  font-size: 15px;
+}
+
+.social-button:hover {
+  background: #ececec;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 200px; /* Reduce sidebar width on smaller screens */
+  .jobs-container {
+    padding: 30px 15px;
   }
 
-  .main-content {
-    margin-left: 200px;
-    width: calc(100% - 200px);
+  .job-card {
+    padding: 25px;
+  }
+
+  .auth-container {
+    padding: 30px;
+    margin: 50px 15px;
+    width: auto;
   }
 }

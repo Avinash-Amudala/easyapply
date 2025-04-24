@@ -1,11 +1,13 @@
-// src/components/SubscriptionOptions.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateSubscription } from '../api';
-import './SubscriptionOptions.css';
 
 function SubscriptionOptions({ onSubscribe }) {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("User authentication state in SubscriptionOptions");
+    }, []);
 
     const handleSubscription = async (plan) => {
         try {
@@ -26,20 +28,14 @@ function SubscriptionOptions({ onSubscribe }) {
             <div className="plans">
                 <div className="plan-card">
                     <h3>Basic Plan</h3>
-                    <p>$150</p>
-                    <p>200 Applications</p>
                     <button onClick={() => handleSubscription('basic')}>Subscribe</button>
                 </div>
                 <div className="plan-card">
                     <h3>Pro Plan</h3>
-                    <p>$300</p>
-                    <p>500 Applications</p>
                     <button onClick={() => handleSubscription('pro')}>Subscribe</button>
                 </div>
                 <div className="plan-card">
                     <h3>Premium Plan</h3>
-                    <p>$400</p>
-                    <p>1000 Applications</p>
                     <button onClick={() => handleSubscription('premium')}>Subscribe</button>
                 </div>
             </div>

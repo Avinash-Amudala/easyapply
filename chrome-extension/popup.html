@@ -5,38 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Assistant</title>
     <link rel="stylesheet" href="popup.css">
+    <script src="jwt-decode.min.js"></script>
+    <style>
+        .hidden { display: none; }
+        .popup-container { width: 350px; padding: 20px; }
+        .message-section { margin: 15px 0; padding: 10px; border-radius: 4px; }
+        .auth-message { background: #f8d7da; color: #721c24; }
+        .subscribe-message { background: #fff3cd; color: #856404; }
+        .input-group { margin-bottom: 15px; }
+        .btn-primary { background: #007bff; color: white; padding: 8px 15px; }
+    </style>
 </head>
 <body>
 <div class="popup-container">
     <header>
         <h1>Job Assistant</h1>
     </header>
-    <form id="jobForm">
-        <div id="authSection" class="hidden">
-            <p>Please <a href="#" id="loginLink">log in</a> to your account.</p>
-        </div>
-        <div id="jobSection">
+    <div id="authSection" class="message-section auth-message">
+        <p>Please <a href="#" id="loginLink">log in</a> to use this extension.</p>
+    </div>
+    <div id="subscribeSection" class="message-section subscribe-message hidden">
+        <p>Active subscription required. <a href="#" id="subscribeLink">Upgrade your account</a></p>
+    </div>
+    <div id="jobSection" class="hidden">
+        <form id="jobForm">
             <div class="input-group">
                 <label for="jobTitle">Job Title</label>
-                <input type="text" id="jobTitle" placeholder="e.g., Software Engineer" />
+                <input type="text" id="jobTitle" readonly>
             </div>
             <div class="input-group">
-                <label for="companyName">Company Name</label>
-                <input type="text" id="companyName" placeholder="e.g., Tech Innovators Inc." />
+                <label for="companyName">Company</label>
+                <input type="text" id="companyName" readonly>
             </div>
             <div class="input-group">
                 <label for="jobLink">Job Link</label>
-                <input type="text" id="jobLink" placeholder="e.g., https://linkedin.com/job" />
+                <input type="text" id="jobLink" readonly>
             </div>
             <div class="input-group">
-                <label for="jobDescription">Job Description</label>
-                <textarea id="jobDescription" placeholder="Job description will appear here..."></textarea>
+                <label for="jobDescription">Description</label>
+                <textarea id="jobDescription" readonly></textarea>
             </div>
             <button type="button" id="delegateJob" class="btn-primary">Delegate Job</button>
-        </div>
-    </form>
+            <button type="button" id="recommendJobs" class="btn-primary">Get Personalized Job Recommendations</button>
+        </form>
+    </div>
     <footer>
-        <p>Powered by <strong>Job Assistant</strong></p>
+        <p>Powered by <strong>EasyApply</strong></p>
     </footer>
 </div>
 <script src="popup.js"></script>

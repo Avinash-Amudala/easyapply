@@ -1,50 +1,69 @@
+// Listen for messages from the extension
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'getToken') {
+        chrome.storage.local.get(['token'], (result) => {
+            sendResponse({ token: result.token });
+        });
+        return true;
+    }
+
     if (request.action === 'extractJobDetails') {
-        try {
-            const jobTitle = document.querySelector('h1[data-test-job-title]')?.textContent.trim() ||
-                document.querySelector('.t-24.t-bold.inline')?.textContent.trim() || 'No Title Found';
-
-            let companyName = 'No Company Found';
-            const companySelectors = [
-                '.jobs-unified-top-card__company-name a',
-                '.job-details-jobs-unified-top-card__company-name a',
-                '.jobs-company-name',
-                '[data-tracking-control-name="public_jobs_topcard-org-name"]'
-            ];
-
-            for (const selector of companySelectors) {
-                const element = document.querySelector(selector);
-                if (element) {
-                    companyName = element.textContent.trim();
-                    break;
-                }
-            }
-
-            if (companyName === 'No Company Found') {
-                const container = document.querySelector('.jobs-unified-top-card__company-name') ||
-                    document.querySelector('.job-details-jobs-unified-top-card__company-name');
-                companyName = container?.textContent?.trim() || 'No Company Found';
-            }
-
-            companyName = companyName.replace(/\s+/g, ' ').replace(/[\u00AD]/g, '');
-
-            const jobLink = window.location.href;
-
-            const jobDescriptionElement = document.querySelector('.jobs-box__html-content') ||
-                document.querySelector('.show-more-less-html__markup');
-            const jobDescription = jobDescriptionElement?.textContent.trim() || 'No Description Found';
-
-            sendResponse({
-                title: jobTitle,
-                company: companyName,
-                link: jobLink,
-                description: jobDescription,
-            });
-        } catch (error) {
-            console.error('Error extracting job details:', error);
-            sendResponse({
-                error: 'Failed to extract job details. Ensure you are on a valid job posting page.',
-            });
-        }
+        const jobDetails = extractJobDetails();
+        sendResponse(jobDetails);
     }
 });
+
+// Function to extract job details from LinkedIn DOM
+function extractJobDetails() {
+    // Extract job title
+    const jobTitle = document.querySelector('.job-details-jobs-unified-top-card__job-title')?.textContent.trim() ||
+        document.querySelector('.jobs-unified-top-card__job-title')?.textContent.trim() ||
+        document.querySelector('h1[data-test-job-title]')?.textContent.trim() ||
+        'No Title Found';
+
+    // Extract company name
+    let companyName = 'No Company Found';
+    const companySelectors = [
+        '.job-details-jobs-unified-top-card__company-name a',
+        '.jobs-unified-top-card__company-name a',
+        '.jobs-unified-top-card__company-name span',
+        '.job-details-jobs-unified-top-card__company-name span',
+        '.jobs-company-name',
+        '[data-tracking-control-name="public_jobs_topcard-org-name"]',
+        '.jobs-unified-top-card__company-name',
+        '.job-details-jobs-unified-top-card__company-name'
+    ];
+
+    for (const selector of companySelectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+            companyName = element.textContent.trim();
+            break;
+        }
+    }
+
+    // Extract job link
+    const jobLink = window.location.href;
+
+    // Extract job description
+    const jobDescriptionElement = document.querySelector('.jobs-description__content') ||
+        document.querySelector('.jobs-box__html-content') ||
+        document.querySelector('.show-more-less-html__markup') ||
+        document.querySelector('.jobs-description-content__text');
+    const jobDescription = jobDescriptionElement?.textContent.trim() || 'No Description Found';
+
+    // Extract location
+    const locationElement = document.querySelector('.job-details-jobs-unified-top-card__primary-description-without-tagline') ||
+        document.querySelector('.jobs-unified-top-card__primary-description') ||
+        document.querySelector('.jobs-unified-top-card__bullet');
+    const location = locationElement?.textContent.trim() || 'Location not specified';
+
+    // Return extracted details
+    return {
+        title: jobTitle,
+        company: companyName,
+        link: jobLink,
+        description: jobDescription,
+        location: location
+    };
+}

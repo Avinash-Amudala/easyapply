@@ -24,6 +24,10 @@ const jobApplicationSchema = new mongoose.Schema({
         default: Date.now,
     },
     notes: String,
+    link: String,
+    description: String
 });
+
+jobApplicationSchema.index({ userId: 1, status: 1 });
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema);

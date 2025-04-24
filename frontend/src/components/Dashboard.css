@@ -1,71 +1,111 @@
-/* src/components/Dashboard.css */
+/* Main Layout */
 .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: var(--sidebar-bg);
     padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.search-bar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.job-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-/* src/components/JobCard.css */
-.job-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.job-card-actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
+/* Main Content */
+.dashboard-content {
+    margin-left: 260px;
+    padding: 40px;
+    flex: 1;
 }
 
+/* Job List */
+.jobs-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Subscription Box */
+.subscription-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Buttons */
 .btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 14px;
-}
-
-.edit-btn {
-    background-color: #007bff;
-    color: white;
-}
-
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-}
-
-.logout-btn {
-    background-color: #ff4d4f;
-    color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: auto;
+    transition: all 0.3s ease-in-out;
 }
 
-.logout-btn:hover {
-    background-color: #ff7875;
+.btn-unsubscribe {
+    background: var(--success);
+    color: white;
 }
 
+.btn-unsubscribe:hover {
+    background: #1DAF61;
+}
+
+.btn-logout {
+    background: var(--danger);
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-logout:hover {
+    background: #D8342F;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px;
+    }
+
+    .dashboard-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+/* Add these styles */
+.analytics-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.assistant-info {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}

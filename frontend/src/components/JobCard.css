@@ -1,19 +1,99 @@
 /* src/components/JobCard.css */
+.job-card.pending { border-left: 5px solid #ffc107; }
+.job-card.applied { border-left: 5px solid #28a745; }
+.job-card.rejected { border-left: 5px solid #dc3545; }
 
 .job-card {
-    border: 1px solid #ddd;
-    padding: 20px;
+    padding: 15px;
     margin: 10px 0;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.job-card a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.job-card-actions {
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #007bff;
+    color: white;
+    margin-right: 8px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
+}
+.job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .job-card h3 {
-    margin: 0;
-    color: #333;
+    font-size: 1.2rem;
+    color: #1d1d1f;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
 }
 
 .job-card p {
-    margin: 5px 0;
-    color: #555;
+    color: #86868b;
+    font-size: 0.95rem;
+    margin: 0.4rem 0;
+    line-height: 1.5;
+}
+
+.job-card strong {
+    color: #1d1d1f;
+    font-weight: 500;
+}
+
+.job-card-actions {
+    margin-top: 1.2rem;
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    background: #0071e3;
+    color: white;
+}
+
+.delete-btn {
+    background: #ff3b30;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.85;
+    transform: scale(0.96);
 }

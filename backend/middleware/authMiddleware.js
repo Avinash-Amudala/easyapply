@@ -1,68 +1,87 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Middleware to require authentication
 exports.requireAuth = async (req, res, next) => {
+    console.log('Request URL:', req.originalUrl);
+    console.log('Auth headers:', req.headers.authorization);
     try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({ message: 'No token provided or invalid format' });
-        }
+        let token = req.cookies.token ||
+            req.headers.authorization?.replace(/^Bearer\s+/i, '') ||
+            req.headers['extension-token'];
 
-        const token = authHeader.split(" ")[1];
+        if (!token) return res.status(401).json({ message: "Unauthorized" });
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId)
+            .select('-password')
+            .populate('assignedAssistant');
 
-        const user = await User.findById(decoded.id);
-        if (!user) {
-            return res.status(403).json({ message: 'User not found or access denied' });
-        }
-
-        req.user = user; // Attach the authenticated user to the request object
-        next();
-    } catch (error) {
-        console.error('Authorization error:', error);
-
-        if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({ message: 'Token expired' });
-        }
-
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-
-        res.status(500).json({ message: 'Server error' });
-    }
-};
-
-// Middleware to require a valid subscription
-exports.requireSubscription = async (req, res, next) => {
-    try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({ message: 'No token provided or invalid format' });
-        }
-
-        const token = authHeader.split(" ")[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const user = await User.findById(decoded.id);
-        if (!user || !user.subscriptionStatus) {
-            return res.status(403).json({ message: 'Active subscription required to access this feature' });
-        }
+        if (!user) return res.status(401).json({ message: "Invalid user" });
 
         req.user = user;
         next();
     } catch (error) {
+        console.error('Auth middleware error:', error);
+        res.status(401).json({ message: "Invalid token" });
+    }
+};
+
+exports.authenticateUser = (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ isAuthenticated: false, message: "User not logged in" });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ isAuthenticated: false, message: "Invalid token" });
+        }
+
+        req.user = decoded;
+        next();
+    });
+};
+
+// Middleware to check if the user has an active subscription
+exports.requireSubscription = async (req, res, next) => {
+    try {
+        // Always get fresh user data from DB
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(403).json({ message: 'User not found' });
+
+        const hasValidSubscription = user.isSubscriptionActive();
+        const hasCredits = user.credits > 0;
+
+        if (!hasValidSubscription && !hasCredits) {
+            return res.status(403).json({
+                message: 'Active subscription or credits required',
+                errorCode: 'SUBSCRIPTION_REQUIRED'
+            });
+        }
+
+        req.user = user; // Attach fresh user data
+        next();
+    } catch (error) {
         console.error('Subscription check error:', error);
-
-        if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({ message: 'Token expired' });
-        }
-
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-
         res.status(500).json({ message: 'Server error' });
     }
+};
+
+exports.checkSubscription = (req, res) => {
+    res.json({ isSubscribed: req.user.subscriptionStatus });
+};
+
+exports.requireRole = (roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            console.log(`Role violation attempt: ${req.user.role} tried accessing ${roles} route`);
+            return res.status(403).json({
+                message: 'Unauthorized role',
+                requiredRole: roles,
+                currentRole: req.user.role
+            });
+        }
+        next();
+    };
 };

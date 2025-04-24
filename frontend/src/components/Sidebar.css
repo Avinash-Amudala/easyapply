@@ -1,73 +1,110 @@
-/* src/Sidebar.css */
-
+/* src/components/Sidebar.css */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #2f3b52;
-    color: #ffffff;
+    width: 280px;
+    height: 100vh; /* Ensures sidebar covers full height */
+    background: #f5f5f7;
+    border-right: 1px solid #e2e2e9;
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Pushes content properly */
     padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    box-sizing: border-box; /* Prevents content from overflowing */
 }
 
-.sidebar h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #61dafb;
-}
-
-.sidebar a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 12px 15px;
-    border-radius: 4px;
-    margin: 5px 0;
-    font-size: 1em;
-    display: block;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.sidebar a:hover,
-.sidebar a.active {
-    background-color: #40597a;
-}
-
-.sidebar .logout-btn {
-    margin-top: auto;
-    padding: 12px 15px;
-    background-color: #e74c3c;
-    color: white;
-    text-align: center;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.sidebar .logout-btn:hover {
-    background-color: #c0392b;
-}
-
+/* Navigation Links */
 .sidebar ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.sidebar ul li {
-    margin: 15px 0;
+.sidebar li {
+    margin-bottom: 1rem;
 }
 
-.sidebar ul li a {
+.sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #1d1d1f;
     text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
-.sidebar ul li a:hover {
-    color: #007bff;
+.sidebar a.active-link {
+    background: rgba(0, 113, 227, 0.1);
+    color: #0071e3;
+}
+
+.sidebar a:hover:not(.active-link) {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Subscription & Credits Section */
+.subscription-container {
+    margin-top: auto; /* Pushes to bottom */
+    text-align: center; /* Center align */
+    padding: 15px 0;
+    border-top: 1px solid #e2e2e9;
+}
+
+.subscription-info {
+    margin-bottom: 20px; /* Space before buttons */
+}
+
+.subscription-info p {
+    color: #86868b;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Buttons */
+.unsubscribe-button, .logout-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+/* Ensure buttons are spaced equally */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between buttons */
+}
+
+.unsubscribe-button {
+    background: #ff3b30;
+    color: white;
+}
+
+.unsubscribe-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.logout-button {
+    background: transparent;
+    color: #1d1d1f;
+    border: 1px solid #d2d2d7;
+}
+
+.logout-button:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* Ensure responsive behavior */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
 }
